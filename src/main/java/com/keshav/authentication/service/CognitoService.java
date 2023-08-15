@@ -41,7 +41,7 @@ public class CognitoService {
 		return cognitoClient.adminCreateUser(request);
 	}
 
-	public TokenInfoTo initiateAuthentication(SignInRequest signInRequest) {
+	public AdminInitiateAuthResult initiateAuthentication(SignInRequest signInRequest) {
 		 // Authenticate user using Cognito
         AdminInitiateAuthRequest request = new AdminInitiateAuthRequest()
                 .withAuthFlow(AuthFlowType.ADMIN_NO_SRP_AUTH)
@@ -50,16 +50,6 @@ public class CognitoService {
                 .addAuthParametersEntry(USERNAME, signInRequest.getUsername())
                 .addAuthParametersEntry(PASSWORD, signInRequest.getPassword());
 
-        AdminInitiateAuthResult result = cognitoClient.adminInitiateAuth(request);
-        return mapAuthResultToTokenInfo(result);
-	}
-
-	private TokenInfoTo mapAuthResultToTokenInfo(AdminInitiateAuthResult result) {
-		TokenInfoTo tokenInfo = new TokenInfoTo(); 
-        tokenInfo.setAccessToken(result.getAuthenticationResult().getAccessToken());
-        tokenInfo.setRefreshToken(result.getAuthenticationResult().getRefreshToken());
-        tokenInfo.setIdToken(result.getAuthenticationResult().getIdToken());
-        tokenInfo.setExpiresIn(result.getAuthenticationResult().getExpiresIn());
-		return tokenInfo;
+        return cognitoClient.adminInitiateAuth(request);
 	}
 }

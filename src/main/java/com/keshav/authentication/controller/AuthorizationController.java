@@ -20,7 +20,7 @@ import com.keshav.authentication.to.TokenInfoTo;
 public class AuthorizationController {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
 	@Autowired
-	public AuthorizationService authorizationService;
+	private AuthorizationService authorizationService;
 
 	@PostMapping("/signup")
 	public ResponseEntity<String> signUp(@RequestBody SignUpRequest signUpRequest) {
